@@ -14,7 +14,6 @@ def check_online(file_hash):
     try:
         response = requests.get(url, headers=headers)
 
-        # --- УСПЕШНЫЙ ОТВЕТ ---
         if response.status_code == 200:
             data = response.json()
 
@@ -28,22 +27,18 @@ def check_online(file_hash):
             else:
                 result = "SAFE"
 
-        # --- НЕ НАЙДЕН ---
         elif response.status_code == 404:
             result = "UNKNOWN"
 
-        # --- ЛИМИТ API ---
         elif response.status_code == 429:
             print("⚠ Превышен лимит API, ждем...")
             time.sleep(20)
             return "UNKNOWN"
 
-        # --- ДРУГИЕ ОШИБКИ ---
         else:
             print(f"Ошибка API: {response.status_code}")
             return "UNKNOWN"
 
-        # --- ЗАДЕРЖКА (ВАЖНО) ---
         time.sleep(15)
 
         return result

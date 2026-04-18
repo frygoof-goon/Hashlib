@@ -21,13 +21,11 @@ def main():
         try:
             file_hash = calculate_sha256(file)
 
-            # --- ЛОКАЛЬНАЯ ПРОВЕРКА ---
             if check_local_db(file_hash):
                 status = "MALICIOUS"
                 source = "LOCAL"
                 malicious += 1
 
-            # --- УДАЛЁННАЯ ПРОВЕРКА ---
             else:
                 status = check_online(file_hash)
                 source = "ONLINE"
@@ -39,7 +37,6 @@ def main():
                 else:
                     unknown += 1
 
-            # --- ВЫВОД ---
             print("\nФайл:", file)
             print("Хэш:", file_hash)
             print("Статус:", status)
@@ -49,7 +46,6 @@ def main():
         except Exception as e:
             print("Ошибка:", e)
 
-    # --- ИТОГ ---
     print("\n=== ИТОГ ===")
     print("Всего файлов:", total)
     print("Вредоносных:", malicious)
